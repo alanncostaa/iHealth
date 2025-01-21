@@ -1,6 +1,5 @@
 package com.example.ihealth.screen
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -11,25 +10,19 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.progressSemantics
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SegmentedButton
-import androidx.compose.material3.SegmentedButtonDefaults
-import androidx.compose.material3.SingleChoiceSegmentedButtonRow
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -37,6 +30,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Devices
@@ -45,15 +39,24 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import androidx.room.Entity
 import com.example.ihealth.R
 import com.example.ihealth.components.DrinkCard
 import com.example.ihealth.components.GoalCard
 import com.example.ihealth.components.MenuCard
+import com.example.ihealth.database.IHealthDatabase
+import com.example.ihealth.database.entities.DrinkEntity
 import com.example.ihealth.ui.theme.Padrao
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DrinkingHistoryScreen(navController: NavController) {
+
+    val context = LocalContext.current
+    val drinkHistory = IHealthDatabase
+        .getInstance(context)
+        .drinkDao()
+        .findAll()
 
     Scaffold { innerPadding ->
         Surface (modifier = Modifier.padding(innerPadding)){
@@ -72,6 +75,7 @@ fun DrinkingHistoryScreen(navController: NavController) {
                     .padding(28.dp)
                     .fillMaxSize()
             ) {
+
                 Column(
                     verticalArrangement = Arrangement.spacedBy(16.dp)
                 ){
@@ -111,6 +115,7 @@ fun DrinkingHistoryScreen(navController: NavController) {
                         horizontalArrangement = Arrangement.SpaceBetween,
                         verticalAlignment = Alignment.CenterVertically
                     ){
+
                         Text("Histórico de Hidratação")
                         TextButton(
 
@@ -137,14 +142,21 @@ fun DrinkingHistoryScreen(navController: NavController) {
                     }
                     Column(
                         modifier = Modifier
-                            .verticalScroll(rememberScrollState()),
+                            .verticalScroll(rememberScrollState())
+                            .padding(16.dp),
                         verticalArrangement = Arrangement.spacedBy(8.dp)
                     ){
-                        DrinkCard("25 de Novembro", "16:52", 200)
-                        DrinkCard("25 de Novembro", "16:52", 200)
-                        DrinkCard("25 de Novembro", "16:52", 200)
-                        DrinkCard("25 de Novembro", "16:52", 200)
-                        DrinkCard("25 de Novembro", "16:52", 200)
+
+
+                        for(drink in drinkHistory){
+
+                            DrinkCard(drink, navController)
+
+
+                        }
+
+
+
                     }
 
                 }

@@ -1,4 +1,10 @@
 package com.example.ihealth.model
 
-class Drink {
-}
+
+data class Drink(
+    val id: String,
+    val quantidade: Int,
+    val tipo: String,
+    val data: String,
+    val hora: String
+)

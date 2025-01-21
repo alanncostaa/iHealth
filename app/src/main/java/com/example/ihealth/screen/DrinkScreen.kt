@@ -1,7 +1,9 @@
 package com.example.ihealth.screen
 
 import android.annotation.SuppressLint
+import android.os.Build
 import android.text.style.BackgroundColorSpan
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -38,6 +40,7 @@ import androidx.compose.ui.draw.drawWithCache
 import androidx.compose.ui.graphics.Canvas
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Devices
@@ -49,14 +52,23 @@ import androidx.navigation.compose.rememberNavController
 import com.example.ihealth.R
 import com.example.ihealth.components.GoalCard
 import com.example.ihealth.components.MenuCard
+import com.example.ihealth.database.IHealthDatabase
+import com.example.ihealth.database.entities.DrinkEntity
+import com.example.ihealth.model.Drink
 import com.example.ihealth.ui.theme.Padrao
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 
+@RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DrinkScreen(navController: NavController) {
 
-
+    val context = LocalContext.current
+    var aux by remember { mutableIntStateOf(200)
+    }
 
     Scaffold { innerPadding ->
         Surface (modifier = Modifier.padding(innerPadding)){
@@ -115,7 +127,7 @@ fun DrinkScreen(navController: NavController) {
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
-                        var aux by remember { mutableIntStateOf(200) }
+
                         Button(
                             onClick = {
                                 if(aux > 200.00){
@@ -165,7 +177,36 @@ fun DrinkScreen(navController: NavController) {
                     Button(
                         modifier = Modifier
                             .fillMaxWidth(),
-                        onClick = { },
+                        onClick = {
+                            var tipo: String = "Água";
+
+                            val currentDateTime = LocalDateTime.now()
+
+                            val dataAtual  = currentDateTime.toLocalDate()
+                            val horaAtual  = currentDateTime.toLocalTime()
+
+                            val dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")
+                            val timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss")
+
+                            val dataFormatada = dataAtual.format(dateFormatter)
+                            val horaFormatada = horaAtual.format(timeFormatter)
+
+                            if(selectedIndex == 0){
+                                tipo = "Água"
+                            }else if(selectedIndex == 1){
+                                tipo = "Suco"
+                            }else if(selectedIndex == 2){
+                                tipo = "Chá"
+                            }else {
+                                tipo = "Outros"
+                            }
+                            val drink = DrinkEntity(quantidade = aux, tipo = tipo, data = dataFormatada, hora = horaFormatada)
+
+                            val drinkSave = IHealthDatabase
+                                .getInstance(context)
+                                .drinkDao()
+                                .save(drink)
+                        },
                         colors = ButtonDefaults.buttonColors(containerColor = Padrao)
                     ) { Text("Salvar",
                         color = Color.White)
@@ -199,6 +240,7 @@ fun DrinkScreen(navController: NavController) {
 
 }
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Preview(
     device = Devices.PIXEL_3A
 )

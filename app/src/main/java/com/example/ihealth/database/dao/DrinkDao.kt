@@ -1,16 +1,20 @@
 package com.example.ihealth.database.dao
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import com.example.ihealth.database.entities.DrinkEntity
 import com.example.ihealth.model.Drink
 
 @Dao
-interface DrikDao {
+interface DrinkDao {
     @Query("SELECT * FROM DrinkEntity")
-    fun findAll(): List<Drink>
+    fun findAll(): List<DrinkEntity>
 
     @Insert
-    suspend fun save(drink: DrinkEntity)
+    fun save(drink: DrinkEntity)
+
+    @Delete
+    fun delete(drink: DrinkEntity)
 }

@@ -12,17 +12,31 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.ihealth.R
+import com.example.ihealth.database.IHealthDatabase
+import com.example.ihealth.database.entities.DrinkEntity
+
 
 @Composable
-fun DrinkCard(data: String, hora: String, medida: Int) {
+fun DrinkCard(data: DrinkEntity, navController: NavController) {
+    val context = LocalContext.current
+
+
+
     Surface (
         shadowElevation = 8.dp,
         shape = RoundedCornerShape(16.dp)
@@ -53,15 +67,19 @@ fun DrinkCard(data: String, hora: String, medida: Int) {
                 verticalArrangement = Arrangement.SpaceBetween
 
                 ) {
-                    Text("${data}",
+                    Text("${data.data}",
                         fontSize = 12.sp,
 
                         )
-                    Text("${medida} ml",
+                    Text("${data.quantidade} ml",
                         fontSize = 18.sp,
                         fontWeight = FontWeight.W500,
                     )
-                    Text("${hora}",
+                    Text("${data.tipo}",
+                        fontSize = 12.sp,
+
+                        )
+                    Text("${data.hora}",
                         fontSize = 12.sp,
 
                         )
@@ -69,15 +87,27 @@ fun DrinkCard(data: String, hora: String, medida: Int) {
                 }
             }
 
+
+
             TextButton(
                 onClick = {
 
+                    val drinkDelete = IHealthDatabase
+                        .getInstance(context)
+                        .drinkDao()
+                        .delete(data)
+
+
+                    navController.navigate("drinkingHistory")
+
                 }
+
             ) {
+
                 Image(
                     modifier = Modifier
                         .size(20.dp),
-                    painter = painterResource(id = R.drawable.__proximo),
+                    painter = painterResource(id = R.drawable.__excluir),
                     contentDescription = null,
                 )
             }
@@ -90,5 +120,5 @@ fun DrinkCard(data: String, hora: String, medida: Int) {
 @Preview
 @Composable
 fun DrinkCardPreview(){
-    DrinkCard("25 de Novembro","16:50", 200)
+
 }

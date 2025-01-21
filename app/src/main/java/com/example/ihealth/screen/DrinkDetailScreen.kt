@@ -100,7 +100,9 @@ fun DrinkDetailScreen(navController: NavController) {
                         Text("Hidratação")
                         TextButton(
 
-                            onClick = { },
+                            onClick = {
+                                navController.navigate("drinkingHistory")
+                            },
                             modifier = Modifier
                                 .padding(4.dp)
 
@@ -119,7 +121,13 @@ fun DrinkDetailScreen(navController: NavController) {
                         }
 
                     }
-                    DetailDrinkCard("25 de Novembro", "16:52","Água", 200)
+                    Column(
+                        modifier = Modifier
+                            .padding(16.dp)
+                    ) {
+                        DetailDrinkCard("25 de Novembro", "16:52","Água", 200)
+                    }
+
 
                 }
 
