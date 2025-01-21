@@ -2,18 +2,27 @@ package com.example.ihealth.screen
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowDropDown
+import androidx.compose.material.icons.filled.ArrowForward
+import androidx.compose.material.icons.filled.KeyboardArrowRight
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -103,12 +112,112 @@ fun ProfileScreen(navController: NavController) {
                     TotalProgressCard(hr = 10.5, km = 10.6, kcal = 100.0)
 
                 }
-                Column (
-                    verticalArrangement = Arrangement.Top
-                ){
-                    Text("Beginner",
-                        fontSize = 10.sp,
-                        color = Color.White)
+                Surface(
+                    shadowElevation = 8.dp,
+                    shape = RoundedCornerShape(16.dp) ,
+
+
+                    ) {
+                    Column(
+                        verticalArrangement = Arrangement.spacedBy(30.dp),
+
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(20.dp)
+
+                    ) {
+//                      Metricas Pessoais
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth(),
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            verticalAlignment = Alignment.CenterVertically
+                        ){
+                            Image(
+                                modifier = Modifier
+                                    .size(45.dp),
+                                painter = painterResource(id = R.drawable.raisinghand),
+                                contentDescription = null,
+                                contentScale = ContentScale.Crop
+                            )
+
+                            Column (
+                                modifier = Modifier.width(200.dp),
+                                horizontalAlignment = Alignment.Start
+                            ){
+                                Text("Métricas Pessoais",
+                                    fontSize = 18.sp,
+                                    color = Color.Black)
+                            }
+
+                            Icon(
+                                imageVector = Icons.Filled.KeyboardArrowRight,
+                                contentDescription = "Seta para a direita",
+                                tint = Color.Black
+                            )
+                        }
+
+//                      Metas
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth(),
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            verticalAlignment = Alignment.CenterVertically
+                        ){
+                            Image(
+                                modifier = Modifier
+                                    .size(45.dp),
+                                painter = painterResource(id = R.drawable.trophy),
+                                contentDescription = null,
+                                contentScale = ContentScale.Crop
+                            )
+
+                            Column (
+                                modifier = Modifier.width(200.dp),
+                                horizontalAlignment = Alignment.Start
+                            ){
+                                Text("Metas",
+                                    fontSize = 18.sp,
+                                    color = Color.Black)
+                            }
+
+                            Icon(
+                                imageVector = Icons.Filled.KeyboardArrowRight,
+                                contentDescription = "Seta para a direita",
+                                tint = Color.Black
+                            )
+                        }
+//                      Dados Pessoais
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth(),
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            verticalAlignment = Alignment.CenterVertically
+                        ){
+                            Image(
+                                modifier = Modifier
+                                    .size(45.dp),
+                                painter = painterResource(id = R.drawable.gear),
+                                contentDescription = null,
+                                contentScale = ContentScale.Crop
+                            )
+
+                            Column (
+                                modifier = Modifier.width(200.dp),
+                                horizontalAlignment = Alignment.Start
+                            ){
+                                Text("Dados Pessoais",
+                                    fontSize = 18.sp,
+                                    color = Color.Black)
+                            }
+
+                            Icon(
+                                imageVector = Icons.Filled.KeyboardArrowRight,
+                                contentDescription = "Seta para a direita",
+                                tint = Color.Black
+                            )
+                        }
+                    }
                 }
             }
             Column(
