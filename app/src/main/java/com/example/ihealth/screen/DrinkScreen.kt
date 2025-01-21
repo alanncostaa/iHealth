@@ -76,7 +76,12 @@ fun DrinkScreen(navController: NavController) {
                 modifier = Modifier
                     .background(
                         color = Padrao,
-                        shape = RoundedCornerShape(16.dp)
+                        shape =  RoundedCornerShape(
+                            topStart = 0.dp,
+                            topEnd = 0.dp,
+                            bottomStart = 16.dp,
+                            bottomEnd = 16.dp
+                        )
                     )
                     .fillMaxWidth()
                     .padding(100.dp)
