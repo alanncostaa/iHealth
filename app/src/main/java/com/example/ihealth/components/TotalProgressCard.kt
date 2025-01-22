@@ -42,7 +42,6 @@ fun TotalProgressCard(km: Double, hr: Double, kcal: Double) {
     ) {
         Column(
             verticalArrangement = Arrangement.spacedBy(8.dp),
-
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(20.dp)
