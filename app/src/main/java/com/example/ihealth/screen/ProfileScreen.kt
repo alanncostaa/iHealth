@@ -3,6 +3,7 @@ package com.example.ihealth.screen
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -42,9 +43,6 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.ihealth.R
-import com.example.ihealth.components.DetailDrinkCard
-import com.example.ihealth.components.DrinkCard
-import com.example.ihealth.components.GoalCard
 import com.example.ihealth.components.MenuCard
 import com.example.ihealth.components.TotalProgressCard
 import com.example.ihealth.ui.theme.Padrao
@@ -153,7 +151,10 @@ fun ProfileScreen(navController: NavController) {
                             Icon(
                                 imageVector = Icons.Filled.KeyboardArrowRight,
                                 contentDescription = "Seta para a direita",
-                                tint = Color.Black
+                                tint = Color.Black,
+                                modifier = Modifier.clickable {
+                                    navController.navigate("MetricScreen")
+                                }
                             )
                         }
 
@@ -184,7 +185,10 @@ fun ProfileScreen(navController: NavController) {
                             Icon(
                                 imageVector = Icons.Filled.KeyboardArrowRight,
                                 contentDescription = "Seta para a direita",
-                                tint = Color.Black
+                                tint = Color.Black,
+                                modifier = Modifier.clickable {
+                                    navController.navigate("MetasScreen")
+                                }
                             )
                         }
 //                      Dados Pessoais
@@ -214,7 +218,10 @@ fun ProfileScreen(navController: NavController) {
                             Icon(
                                 imageVector = Icons.Filled.KeyboardArrowRight,
                                 contentDescription = "Seta para a direita",
-                                tint = Color.Black
+                                tint = Color.Black,
+                                modifier = Modifier.clickable {
+                                    navController.navigate("DataScreen")
+                                }
                             )
                         }
                     }
