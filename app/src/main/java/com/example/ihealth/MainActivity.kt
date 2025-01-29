@@ -19,6 +19,11 @@ import androidx.navigation.compose.rememberNavController
 import com.example.ihealth.screen.DrinkDetailScreen
 import com.example.ihealth.screen.DrinkScreen
 import com.example.ihealth.screen.DrinkingHistoryScreen
+import com.example.ihealth.screen.LoginScreen
+import com.example.ihealth.screen.MetasScreen
+import com.example.ihealth.screen.MetricScreen
+import com.example.ihealth.screen.ProfileScreen
+import com.example.ihealth.screen.RegisterScreen
 import com.example.ihealth.ui.theme.IHealthTheme
 
 class MainActivity : ComponentActivity() {
@@ -28,7 +33,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             IHealthTheme {
                 val navController = rememberNavController()
-                NavHost(navController = navController, startDestination = "drinkScreen"){
+                NavHost(navController = navController, startDestination = "LoginScreen"){
                     composable(
                         route = "drinkScreen"
                     ){
@@ -43,6 +48,32 @@ class MainActivity : ComponentActivity() {
                         route = "drinkDetail"
                     ){
                         DrinkDetailScreen(navController)
+                    }
+                    composable(
+                        route = "profileScreen"
+                    ){
+                        ProfileScreen(navController)
+                    }
+                    composable(
+                        route = "metasScreen"
+                    ){
+                        MetasScreen(navController)
+                    }
+                    composable(
+                        route = "metricScreen"
+                    ){
+                        MetricScreen(navController)
+                    }
+                    composable(
+                        route = "loginScreen"
+                    ){
+                        LoginScreen(navController)
+                    }
+
+                    composable(
+                        route = "registerScreen"
+                    ){
+                        RegisterScreen(navController)
                     }
                 }
             }
