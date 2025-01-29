@@ -20,6 +20,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -47,19 +48,23 @@ import com.example.ihealth.components.MenuCard
 import com.example.ihealth.database.IHealthDatabase
 import com.example.ihealth.database.entities.DrinkEntity
 import com.example.ihealth.ui.theme.Padrao
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DrinkingHistoryScreen(navController: NavController) {
-
     val context = LocalContext.current
-    val drinkHistory = IHealthDatabase
-        .getInstance(context)
-        .drinkDao()
-        .findAll()
+    var drinkHistory by remember { mutableStateOf<List<DrinkEntity>>(emptyList()) }
+
+    LaunchedEffect(Unit) {
+        drinkHistory = withContext(Dispatchers.IO) {
+            IHealthDatabase.getInstance(context).drinkDao().findAll()
+        }
+    }
 
     Scaffold { innerPadding ->
-        Surface (modifier = Modifier.padding(innerPadding)){
+        Surface(modifier = Modifier.padding(innerPadding)) {
             Box(
                 modifier = Modifier
                     .background(
@@ -83,92 +88,76 @@ fun DrinkingHistoryScreen(navController: NavController) {
 
                 Column(
                     verticalArrangement = Arrangement.spacedBy(16.dp)
-                ){
-                    Row (
+                ) {
+                    Row(
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.spacedBy(8.dp)
-                    ){
+                    ) {
                         Image(
                             modifier = Modifier
                                 .size(60.dp)
                                 .clip(CircleShape),
-
                             painter = painterResource(id = R.drawable.__retrato),
                             contentDescription = null,
                             contentScale = ContentScale.Crop
                         )
                         Column {
-                            Text("Bruna Costa",
+                            Text(
+                                "Bruna Costa",
                                 fontSize = 20.sp,
                                 color = Color.White,
-                                fontWeight = FontWeight.W500)
-                            Text("Iniciante",
+                                fontWeight = FontWeight.W500
+                            )
+                            Text(
+                                "Iniciante",
                                 fontSize = 14.sp,
-                                color = Color.White)
+                                color = Color.White
+                            )
                         }
-
                     }
                     GoalCard(2100, 3000)
                 }
-                Column (
-
+                Column(
                     verticalArrangement = Arrangement.Top
-                ){
-                    Row (
+                ) {
+                    Row(
                         modifier = Modifier
                             .fillMaxWidth(),
                         horizontalArrangement = Arrangement.SpaceBetween,
                         verticalAlignment = Alignment.CenterVertically
-                    ){
-
+                    ) {
                         Text("Histórico de Hidratação")
                         TextButton(
-
                             onClick = {
                                 navController.navigate("drinkScreen")
                             },
-                            modifier = Modifier
-                                .padding(4.dp)
-
+                            modifier = Modifier.padding(4.dp)
                         ) {
                             Image(
-                                modifier = Modifier
-                                    .size(16.dp),
+                                modifier = Modifier.size(16.dp),
                                 painter = painterResource(id = R.drawable.__voltar),
                                 contentDescription = null,
-
                             )
-                            Text("Voltar",
+                            Text(
+                                "Voltar",
                                 color = Padrao,
-                                modifier = Modifier
-                                    .padding(8.dp))
+                                modifier = Modifier.padding(8.dp)
+                            )
                         }
-
                     }
                     Column(
                         modifier = Modifier
                             .verticalScroll(rememberScrollState())
                             .padding(16.dp),
                         verticalArrangement = Arrangement.spacedBy(8.dp)
-                    ){
-
-
-                        for(drink in drinkHistory){
-
+                    ) {
+                        // Exibindo os drinks do histórico
+                        for (drink in drinkHistory) {
                             DrinkCard(drink, navController)
-
-
                         }
-
-
-
                     }
-
                 }
-
-
             }
-
             Column(
                 modifier = Modifier
                     .fillMaxSize()
@@ -176,9 +165,7 @@ fun DrinkingHistoryScreen(navController: NavController) {
                 verticalArrangement = Arrangement.Bottom
             ) { MenuCard() }
         }
-
     }
-
 }
 
 @Preview(
