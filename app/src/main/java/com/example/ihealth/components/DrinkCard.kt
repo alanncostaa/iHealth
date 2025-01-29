@@ -12,11 +12,6 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -67,7 +62,8 @@ fun DrinkCard(data: DrinkEntity, navController: NavController) {
                 verticalArrangement = Arrangement.SpaceBetween
 
                 ) {
-                    Text("${data.data}",
+                    Text(
+                        data.data,
                         fontSize = 12.sp,
 
                         )
@@ -75,11 +71,13 @@ fun DrinkCard(data: DrinkEntity, navController: NavController) {
                         fontSize = 18.sp,
                         fontWeight = FontWeight.W500,
                     )
-                    Text("${data.tipo}",
+                    Text(
+                        data.tipo,
                         fontSize = 12.sp,
 
                         )
-                    Text("${data.hora}",
+                    Text(
+                        data.hora,
                         fontSize = 12.sp,
 
                         )
@@ -120,5 +118,4 @@ fun DrinkCard(data: DrinkEntity, navController: NavController) {
 @Preview
 @Composable
 fun DrinkCardPreview(){
-
 }

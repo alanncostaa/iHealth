@@ -68,9 +68,6 @@ fun GoalCard(ingerido: Int, meta: Int) {
                             contentDescription = null,
                         )
                     }
-
-
-
                 }
 
                 Row (
@@ -86,8 +83,7 @@ fun GoalCard(ingerido: Int, meta: Int) {
                         fontSize = 14.sp,)
                 }
             }
-
-
+            
                 LinearProgressIndicator(progress = 0.7f,
                     modifier = Modifier
                         .fillMaxWidth(),
